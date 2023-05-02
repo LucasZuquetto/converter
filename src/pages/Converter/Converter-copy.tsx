@@ -13,6 +13,7 @@ export default function Converter() {
    const [finalValueKey, setFinalValueKey] = useState<string>("usd");
    const [initialAmount, setInitialAmount] = useState<number>(0);
    const [finalAmount, setFinalAmount] = useState<number>(0);
+   const [exchangeRate, setExchangeRate] = useState<number>(5);
 
    useEffect(() => {
       axiosApi.get("/currencies.json").then(({ data }) => {
@@ -29,7 +30,20 @@ export default function Converter() {
       });
    }, []);
 
+   useEffect(() => {
+      setFinalAmount(initialAmount / exchangeRate);
+   }, [initialAmount]);
    
+   useEffect(() => {
+      setInitialAmount(finalAmount * exchangeRate);
+   }, [finalAmount]);
+
+   useEffect(() => {
+      axiosApi
+         .get(`/currencies/${initialValueKey}/${finalValueKey}.json`)
+         .then(({ data }) => setExchangeRate(data[finalValueKey]));
+   }, [initialValueKey, finalValueKey]);
+
    return (
       <>
          <h1>Converter</h1>
