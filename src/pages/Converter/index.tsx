@@ -5,6 +5,7 @@ import {
    getCurrenciesNames,
    getExchangeRate,
 } from "../../services/getRequests";
+import { TbArrowsExchange } from "react-icons/tb";
 
 export default function Converter() {
    const [currenciesNames, setCurrenciesNames] = useState<ICurrencies[]>([]);
@@ -13,6 +14,7 @@ export default function Converter() {
    const [initialAmount, setInitialAmount] = useState<number>(0);
    const [finalAmount, setFinalAmount] = useState<number>(0);
    const [exchangeRate, setExchangeRate] = useState<number>(5);
+   const [isChanging, setIsChanging] = useState<boolean>(false)
 
    useEffect(() => {
       getCurrenciesNames().then(({ data }) => {
@@ -30,17 +32,21 @@ export default function Converter() {
    }, []);
 
    useEffect(() => {
-      setFinalAmount(initialAmount / exchangeRate);
+      setFinalAmount(initialAmount * exchangeRate);
    }, [initialAmount]);
 
    useEffect(() => {
-      setInitialAmount(finalAmount * exchangeRate);
+      if(isChanging === true){
+         setIsChanging(false)
+         return
+      }
+      setInitialAmount(finalAmount / exchangeRate);
    }, [finalAmount]);
 
    useEffect(() => {
-      getExchangeRate(initialValueKey, finalValueKey).then(({ data }) =>
-         setExchangeRate(data[finalValueKey])
-      );
+      getExchangeRate(initialValueKey, finalValueKey).then(({ data }) => {
+         setExchangeRate(data[finalValueKey]);
+      });
    }, [initialValueKey, finalValueKey]);
 
    return (
@@ -53,6 +59,15 @@ export default function Converter() {
                setValueKey={setInitialValueKey}
                setAmount={setInitialAmount}
                amount={initialAmount}
+            />
+            <TbArrowsExchange
+               style={{ fontSize: "40px" }}
+               onClick={() => {
+                  setFinalValueKey(initialValueKey);
+                  setInitialValueKey(finalValueKey);
+                  setIsChanging(true)
+                  setFinalAmount(initialAmount / exchangeRate)
+               }}
             />
             <Input
                currenciesNames={currenciesNames}
