@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Converter from "./pages/Converter/Converter-copy";
+import Converter from "./pages/Converter";
 import GlobalStyle from "./assets/styles/GlobalStyles";
 
 function App() {
