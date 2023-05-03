@@ -64,7 +64,7 @@ export default function Converter() {
    useEffect(() => {
       getExchangeRate(initialValueKey, finalValueKey).then(({ data }) => {
          setExchangeRate(data[finalValueKey]);
-         setFinalAmount(Number((initialAmount / exchangeRate).toFixed(2)));
+         setFinalAmount(0);
       });
    }, [initialValueKey, finalValueKey]);
 
