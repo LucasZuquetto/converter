@@ -11,23 +11,7 @@ import {
 } from "@chakra-ui/react";
 import Input from "./Input";
 import { TbArrowsDownUp } from "react-icons/tb";
-import { ICurrencies } from "../../interfaces/currenciesNames";
-
-interface IMainCardProps {
-   isVisible: boolean;
-   currenciesNames: ICurrencies[];
-   initialValueKey: string;
-   setInitialValueKey: any;
-   setIsVisible:any;
-   finalAmount:number;
-   exchangeRate:number;
-   setFinalAmount:any;
-   finalValueKey:string;
-   setIsChanging:any;
-   setFinalValueKey:any;
-   initialAmount:number;
-   setInitialAmount:any;
-}
+import { IMainCardProps } from "../../interfaces/mainCardProps";
 
 export default function MainCard({
    setIsVisible,

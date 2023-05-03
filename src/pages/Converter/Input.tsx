@@ -40,11 +40,13 @@ export default function Input(props: IInput) {
                <NumberInputField maxLength={25} disabled={props.isVisible} />
                <NumberInputStepper>
                   <NumberIncrementStepper
+                     visibility={props.isVisible ? "hidden" : "inherit"}
                      bg="green.200"
                      _active={{ bg: "green.300" }}
                      children="+"
                   />
                   <NumberDecrementStepper
+                     visibility={props.isVisible ? "hidden" : "inherit"}
                      bg="pink.200"
                      _active={{ bg: "pink.300" }}
                      children="-"
