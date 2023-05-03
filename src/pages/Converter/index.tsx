@@ -1,24 +1,12 @@
 import { useEffect, useState } from "react";
-import Input from "./Input";
 import { ICurrencies } from "../../interfaces/currenciesNames";
 import {
    getCurrenciesNames,
    getExchangeRate,
 } from "../../services/currenciesRequests";
-import { TbArrowsDownUp } from "react-icons/tb";
-import {
-   Button,
-   IconButton,
-   Card,
-   CardHeader,
-   CardBody,
-   Heading,
-   Container,
-   VStack,
-   Text,
-   Stack,
-} from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
 import ResultsCard from "./ResultsCard";
+import MainCard from "./MainCard";
 
 enum defaultCurrencies {
    brl = "brl",
@@ -82,78 +70,21 @@ export default function Converter() {
 
    return (
       <Container centerContent justifyContent="center" h="100vh">
-         <Card
-            w="100%"
-            variant="outline"
-            boxShadow="rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;"
-            sx={{
-               "@media screen and (max-width:530px)": {
-                  width: "100vw",
-               },
-            }}
-         >
-            <CardHeader textAlign="center">
-               <Heading size="lg">Conversor de Moedas</Heading>
-            </CardHeader>
-            <CardBody>
-               <VStack>
-                  <Stack w="100%">
-                     <Text align="left" fontSize="xl">
-                        De
-                     </Text>
-                     <Input
-                        isVisible={isVisible}
-                        currenciesNames={currenciesNames}
-                        valueKey={initialValueKey}
-                        setValueKey={setInitialValueKey}
-                        setAmount={setInitialAmount}
-                        amount={initialAmount}
-                     />
-                  </Stack>
-
-                  <IconButton
-                     colorScheme="red"
-                     aria-label="Call Segun"
-                     size="lg"
-                     icon={<TbArrowsDownUp style={{ fontSize: "25px" }} />}
-                     onClick={() => {
-                        if (isVisible) {
-                           return;
-                        }
-                        setInitialValueKey(finalValueKey);
-                        setFinalValueKey(initialValueKey);
-                        setIsChanging(false);
-                     }}
-                  />
-                  <Stack w="100%">
-                     <Text align="left" fontSize="xl">
-                        Para
-                     </Text>
-                     <Input
-                        isVisible={isVisible}
-                        currenciesNames={currenciesNames}
-                        valueKey={finalValueKey}
-                        setValueKey={setFinalValueKey}
-                        setAmount={setFinalAmount}
-                        amount={finalAmount}
-                     />
-                  </Stack>
-
-                  <Button
-                     onClick={() => {
-                        setIsVisible(!isVisible)
-                        setFinalAmount(Number((initialAmount * exchangeRate).toFixed(2)));
-                     }}
-                     colorScheme="red"
-                     variant="solid"
-                  >
-                     {isVisible
-                        ? "Realizar nova conversão"
-                        : "Detalhes da Conversão"}
-                  </Button>
-               </VStack>
-            </CardBody>
-         </Card>
+         <MainCard
+            setInitialAmount={setInitialAmount}
+            initialAmount={initialAmount}
+            setFinalValueKey={setFinalValueKey}
+            setIsChanging={setIsChanging}
+            finalValueKey={finalValueKey}
+            setFinalAmount={setFinalAmount}
+            exchangeRate={exchangeRate}
+            finalAmount={finalAmount}
+            setIsVisible={setIsVisible}
+            setInitialValueKey={setInitialValueKey}
+            initialValueKey={initialValueKey}
+            currenciesNames={currenciesNames}
+            isVisible={isVisible}
+         />
          {!isVisible ? (
             <ResultsCard
                transitionType={"out"}
