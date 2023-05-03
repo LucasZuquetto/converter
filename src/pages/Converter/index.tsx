@@ -13,16 +13,16 @@ import {
    CardHeader,
    CardBody,
    Heading,
-   Box,
    Container,
    VStack,
    Text,
    Stack,
 } from "@chakra-ui/react";
+import ResultsCard from "./ResultsCard";
 
 enum defaultCurrencies {
    brl = "brl",
-   usd = "usd"
+   usd = "usd",
 }
 
 export default function Converter() {
@@ -33,38 +33,54 @@ export default function Converter() {
    // trocar axios por react query
    // fazer estatistica que nem o site
    const [currenciesNames, setCurrenciesNames] = useState<ICurrencies[]>([]);
-   const [initialValueKey, setInitialValueKey] = useState<string>(defaultCurrencies.brl);
-   const [finalValueKey, setFinalValueKey] = useState<string>(defaultCurrencies.usd);
+   const [initialValueKey, setInitialValueKey] = useState<string>(
+      defaultCurrencies.brl
+   );
+   const [finalValueKey, setFinalValueKey] = useState<string>(
+      defaultCurrencies.usd
+   );
    const [initialAmount, setInitialAmount] = useState<number>(0);
    const [finalAmount, setFinalAmount] = useState<number>(0);
    const [exchangeRate, setExchangeRate] = useState<number>(5);
    const [isChanging, setIsChanging] = useState<boolean>(false);
+   const [isVisible, setIsVisible] = useState(false);
 
    useEffect(() => {
       getCurrenciesNames().then(({ data }) => {
          const currenciesKeys: string[] = Object.keys(data);
          const currenciesValues: string[] = Object.values(data);
-         const blabla = currenciesKeys.map((c, index) => {
+         const formatCurrenciesNames = currenciesKeys.map((c, index) => {
             return {
                key: currenciesKeys[index],
                name: currenciesValues[index],
             };
          });
 
-         setCurrenciesNames(blabla);
+         setCurrenciesNames(formatCurrenciesNames);
+         setIsChanging(false);
       });
    }, []);
 
    useEffect(() => {
-      setFinalAmount(initialAmount * exchangeRate);
+      if (isChanging === true) {
+         setIsChanging(false);
+         console.log("nao mudou o primeiro");
+         return;
+      }
+      setFinalAmount(Number((initialAmount * exchangeRate).toFixed(2)));
+      setIsChanging(true);
+      console.log(isChanging);
    }, [initialAmount]);
 
    useEffect(() => {
       if (isChanging === true) {
          setIsChanging(false);
+         console.log("nao mudou o segundo");
          return;
       }
-      setInitialAmount(finalAmount / exchangeRate);
+      setInitialAmount(Number((finalAmount / exchangeRate).toFixed(2)));
+      setIsChanging(true);
+      console.log(isChanging);
    }, [finalAmount]);
 
    useEffect(() => {
@@ -80,12 +96,12 @@ export default function Converter() {
             variant="outline"
             boxShadow="rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;"
             sx={{
-               '@media screen and (max-width:530px)': {
-                 width: '100vw',
+               "@media screen and (max-width:530px)": {
+                  width: "100vw",
                },
-             }}
+            }}
          >
-            <CardHeader textAlign='center'>
+            <CardHeader textAlign="center">
                <Heading size="lg">Conversor de Moedas</Heading>
             </CardHeader>
             <CardBody>
@@ -129,15 +145,36 @@ export default function Converter() {
                   </Stack>
 
                   <Button
-                     onClick={() => console.log("click")}
+                     onClick={() => setIsVisible(!isVisible)}
                      colorScheme="red"
                      variant="solid"
                   >
-                     Converter
+                     Detalhes da Conversão
                   </Button>
                </VStack>
             </CardBody>
          </Card>
+         {!isVisible ? (
+            <ResultsCard
+               transitionType={"out"}
+               opacity={"0"}
+               finalValueKey={finalValueKey}
+               exchangeRate={exchangeRate}
+               finalAmount={finalAmount}
+               initialValueKey={initialValueKey}
+               initialAmount={initialAmount}
+            />
+         ) : (
+            <ResultsCard
+               transitionType={"in"}
+               opacity={"1"}
+               finalValueKey={finalValueKey}
+               exchangeRate={exchangeRate}
+               finalAmount={finalAmount}
+               initialValueKey={initialValueKey}
+               initialAmount={initialAmount}
+            />
+         )}
       </Container>
    );
 }
