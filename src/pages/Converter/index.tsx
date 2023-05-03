@@ -117,12 +117,12 @@ export default function Converter() {
                      size="lg"
                      icon={<TbArrowsDownUp style={{ fontSize: "25px" }} />}
                      onClick={() => {
-                        if(isVisible){
-                           return
+                        if (isVisible) {
+                           return;
                         }
                         setInitialValueKey(finalValueKey);
                         setFinalValueKey(initialValueKey);
-                        setIsChanging(false)
+                        setIsChanging(false);
                      }}
                   />
                   <Stack w="100%">
@@ -140,7 +140,10 @@ export default function Converter() {
                   </Stack>
 
                   <Button
-                     onClick={() => setIsVisible(!isVisible)}
+                     onClick={() => {
+                        setIsVisible(!isVisible)
+                        setFinalAmount(Number((initialAmount * exchangeRate).toFixed(2)));
+                     }}
                      colorScheme="red"
                      variant="solid"
                   >

@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 
 export default function Input(props: IInput) {
-   const parse = (val: any) => val.replace(/^\$/, "");
    return (
       <>
          <Select
@@ -32,11 +31,13 @@ export default function Input(props: IInput) {
          <InputGroup>
             <InputLeftAddon children={`${props.valueKey.toUpperCase()}`} />
             <NumberInput
-               onChange={(valueString) => props.setAmount(parse(valueString))}
+               onChange={(valueString) => {
+                  props.setAmount(Number(valueString));
+               }}
                value={props.amount}
                w="100%"
             >
-               <NumberInputField disabled={props.isVisible} />
+               <NumberInputField maxLength={25} disabled={props.isVisible} />
                <NumberInputStepper>
                   <NumberIncrementStepper
                      bg="green.200"
