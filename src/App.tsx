@@ -1,15 +1,18 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Converter from "./pages/Converter";
-import GlobalStyle from "./assets/styles/GlobalStyles";
+// import GlobalStyle from "./assets/styles/GlobalStyles";
+import { ChakraProvider } from "@chakra-ui/react";
 
 function App() {
    return (
       <>
-         <GlobalStyle />
+         {/* <GlobalStyle /> */}
          <BrowserRouter>
-            <Routes>
-               <Route path="/" element={<Converter />} />
-            </Routes>
+            <ChakraProvider>
+               <Routes>
+                  <Route path="/" element={<Converter />} />
+               </Routes>
+            </ChakraProvider>
          </BrowserRouter>
       </>
    );
