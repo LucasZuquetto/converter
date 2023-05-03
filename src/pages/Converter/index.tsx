@@ -26,12 +26,6 @@ enum defaultCurrencies {
 }
 
 export default function Converter() {
-   // readaptar projeto para ter um botao
-   // testes end to end
-   // styling do projeto
-   // tipar bem tudo
-   // trocar axios por react query
-   // fazer estatistica que nem o site
    const [currenciesNames, setCurrenciesNames] = useState<ICurrencies[]>([]);
    const [initialValueKey, setInitialValueKey] = useState<string>(
       defaultCurrencies.brl
@@ -82,8 +76,7 @@ export default function Converter() {
    useEffect(() => {
       getExchangeRate(initialValueKey, finalValueKey).then(({ data }) => {
          setExchangeRate(data[finalValueKey]);
-         setInitialAmount(Number((finalAmount / exchangeRate).toFixed(2)));
-         setFinalAmount(Number((initialAmount * exchangeRate).toFixed(2)));
+         setFinalAmount(Number((initialAmount / exchangeRate).toFixed(2)));
       });
    }, [initialValueKey, finalValueKey]);
 
@@ -127,10 +120,9 @@ export default function Converter() {
                         if(isVisible){
                            return
                         }
-                        setFinalValueKey(initialValueKey);
                         setInitialValueKey(finalValueKey);
-                        setIsChanging(true);
-                        setFinalAmount(initialAmount / exchangeRate);
+                        setFinalValueKey(initialValueKey);
+                        setIsChanging(false)
                      }}
                   />
                   <Stack w="100%">

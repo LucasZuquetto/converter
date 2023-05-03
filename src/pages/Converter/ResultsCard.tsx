@@ -1,14 +1,5 @@
 import { Card, CardBody, Stat, StatHelpText, StatLabel, StatNumber } from "@chakra-ui/react";
-
-interface IResultsCardProps {
-    initialAmount:number;
-    finalAmount:number;
-    initialValueKey:string;
-    exchangeRate:number;
-    finalValueKey:string;
-    opacity:string;
-    transitionType:string
-}
+import { IResultsCardProps } from "../../interfaces/resultsCardsProps";
 
 export default function ResultsCard (props:IResultsCardProps) {
     return (
