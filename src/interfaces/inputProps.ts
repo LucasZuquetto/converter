@@ -6,4 +6,5 @@ export interface IInput {
    setValueKey: any;
    valueKey: string;
    currenciesNames: ICurrencies[];
+   isVisible: boolean
 }

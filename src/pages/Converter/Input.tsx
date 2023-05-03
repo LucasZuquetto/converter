@@ -15,6 +15,7 @@ export default function Input(props: IInput) {
    return (
       <>
          <Select
+            disabled={props.isVisible}
             onChange={(e) => {
                props.setValueKey(e.target.value);
             }}
@@ -35,7 +36,7 @@ export default function Input(props: IInput) {
                value={props.amount}
                w="100%"
             >
-               <NumberInputField />
+               <NumberInputField disabled={props.isVisible} />
                <NumberInputStepper>
                   <NumberIncrementStepper
                      bg="green.200"

@@ -64,28 +64,26 @@ export default function Converter() {
    useEffect(() => {
       if (isChanging === true) {
          setIsChanging(false);
-         console.log("nao mudou o primeiro");
          return;
       }
       setFinalAmount(Number((initialAmount * exchangeRate).toFixed(2)));
       setIsChanging(true);
-      console.log(isChanging);
    }, [initialAmount]);
 
    useEffect(() => {
       if (isChanging === true) {
          setIsChanging(false);
-         console.log("nao mudou o segundo");
          return;
       }
       setInitialAmount(Number((finalAmount / exchangeRate).toFixed(2)));
       setIsChanging(true);
-      console.log(isChanging);
    }, [finalAmount]);
 
    useEffect(() => {
       getExchangeRate(initialValueKey, finalValueKey).then(({ data }) => {
          setExchangeRate(data[finalValueKey]);
+         setInitialAmount(Number((finalAmount / exchangeRate).toFixed(2)));
+         setFinalAmount(Number((initialAmount * exchangeRate).toFixed(2)));
       });
    }, [initialValueKey, finalValueKey]);
 
@@ -111,6 +109,7 @@ export default function Converter() {
                         De
                      </Text>
                      <Input
+                        isVisible={isVisible}
                         currenciesNames={currenciesNames}
                         valueKey={initialValueKey}
                         setValueKey={setInitialValueKey}
@@ -125,6 +124,9 @@ export default function Converter() {
                      size="lg"
                      icon={<TbArrowsDownUp style={{ fontSize: "25px" }} />}
                      onClick={() => {
+                        if(isVisible){
+                           return
+                        }
                         setFinalValueKey(initialValueKey);
                         setInitialValueKey(finalValueKey);
                         setIsChanging(true);
@@ -136,6 +138,7 @@ export default function Converter() {
                         Para
                      </Text>
                      <Input
+                        isVisible={isVisible}
                         currenciesNames={currenciesNames}
                         valueKey={finalValueKey}
                         setValueKey={setFinalValueKey}
@@ -149,7 +152,9 @@ export default function Converter() {
                      colorScheme="red"
                      variant="solid"
                   >
-                     Detalhes da Conversão
+                     {isVisible
+                        ? "Realizar nova conversão"
+                        : "Detalhes da Conversão"}
                   </Button>
                </VStack>
             </CardBody>
