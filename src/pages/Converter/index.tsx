@@ -23,7 +23,7 @@ export default function Converter() {
    const [isVisible, setIsVisible] = useState(false);
 
    const { data: currenciesNames } = useGetCurrenciesNames(setIsChanging);
-   const { data: exchangeRate, refetch: refetchExchangeRate } =
+   const { data: exchangeRate, refetch: refetchExchangeRate, isFetching } =
       useGetExchangeRates(initialValueKey, finalValueKey);
 
    useEffect(() => {
@@ -55,6 +55,7 @@ export default function Converter() {
    return (
       <Container centerContent justifyContent="center" h="100vh">
          <MainCard
+            isFetching={isFetching}
             setInitialAmount={setInitialAmount}
             initialAmount={initialAmount}
             setFinalValueKey={setFinalValueKey}

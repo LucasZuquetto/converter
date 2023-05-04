@@ -14,4 +14,5 @@ export interface IMainCardProps {
     setFinalValueKey:any;
     initialAmount:number;
     setInitialAmount:any;
+    isFetching:boolean;
  }

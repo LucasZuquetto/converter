@@ -7,4 +7,5 @@ export interface IInput {
    valueKey: string;
    currenciesNames: ICurrencies[] | undefined;
    isVisible: boolean
+   isFetching:boolean
 }

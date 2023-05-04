@@ -14,7 +14,7 @@ export default function Input(props: IInput) {
    return (
       <>
          <Select
-            disabled={props.isVisible}
+            disabled={props.isVisible || props.isFetching}
             onChange={(e) => {
                props.setValueKey(e.target.value);
             }}
@@ -36,7 +36,7 @@ export default function Input(props: IInput) {
                value={props.amount}
                w="100%"
             >
-               <NumberInputField maxLength={25} disabled={props.isVisible} />
+               <NumberInputField  maxLength={25} disabled={props.isVisible || props.isFetching} />
                <NumberInputStepper>
                   <NumberIncrementStepper
                      visibility={props.isVisible ? "hidden" : "inherit"}

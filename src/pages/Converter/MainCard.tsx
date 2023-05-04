@@ -12,6 +12,7 @@ import {
 import Input from "./Input";
 import { TbArrowsDownUp } from "react-icons/tb";
 import { IMainCardProps } from "../../interfaces/mainCardProps";
+import { Oval } from "react-loader-spinner";
 
 export default function MainCard({
    setIsVisible,
@@ -27,6 +28,7 @@ export default function MainCard({
    initialValueKey,
    isVisible,
    currenciesNames,
+   isFetching,
 }: IMainCardProps) {
    return (
       <Card
@@ -49,6 +51,7 @@ export default function MainCard({
                      De
                   </Text>
                   <Input
+                     isFetching={isFetching}
                      isVisible={isVisible}
                      currenciesNames={currenciesNames}
                      valueKey={initialValueKey}
@@ -57,14 +60,27 @@ export default function MainCard({
                      amount={initialAmount}
                   />
                </Stack>
-
                <IconButton
                   colorScheme="red"
                   aria-label="Call Segun"
                   size="lg"
-                  icon={<TbArrowsDownUp style={{ fontSize: "25px" }} />}
+                  icon={
+                     isFetching ? (
+                        <Oval
+                           height={25}
+                           width={25}
+                           color="white"
+                           ariaLabel="oval-loading"
+                           secondaryColor="black"
+                           strokeWidth={5}
+                           strokeWidthSecondary={5}
+                        />
+                     ) : (
+                        <TbArrowsDownUp style={{ fontSize: "25px" }} />
+                     )
+                  }
                   onClick={() => {
-                     if (isVisible) {
+                     if (isVisible || isFetching) {
                         return;
                      }
                      setInitialValueKey(finalValueKey);
@@ -72,11 +88,13 @@ export default function MainCard({
                      setIsChanging(false);
                   }}
                />
+
                <Stack w="100%">
                   <Text align="left" fontSize="xl">
                      Para
                   </Text>
                   <Input
+                     isFetching={isFetching}
                      isVisible={isVisible}
                      currenciesNames={currenciesNames}
                      valueKey={finalValueKey}
