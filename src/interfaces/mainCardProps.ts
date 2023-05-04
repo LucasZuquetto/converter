@@ -7,7 +7,7 @@ export interface IMainCardProps {
     setInitialValueKey: any;
     setIsVisible:any;
     finalAmount:number;
-    exchangeRate:number;
+    exchangeRate:number | undefined;
     setFinalAmount:any;
     finalValueKey:string;
     setIsChanging:any;

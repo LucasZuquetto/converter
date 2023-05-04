@@ -89,9 +89,11 @@ export default function MainCard({
                <Button
                   onClick={() => {
                      setIsVisible(!isVisible);
-                     setFinalAmount(
-                        Number((initialAmount * exchangeRate).toFixed(2))
-                     );
+                     if (exchangeRate) {
+                        setFinalAmount(
+                           Number((initialAmount * exchangeRate).toFixed(2))
+                        );
+                     }
                   }}
                   colorScheme="red"
                   variant="solid"
