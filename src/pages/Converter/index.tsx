@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { ICurrencies } from "../../interfaces/currenciesNames";
 import {
-   getCurrenciesNames,
    getExchangeRate,
 } from "../../services/currenciesRequests";
 import { Container } from "@chakra-ui/react";
 import ResultsCard from "./ResultsCard";
 import MainCard from "./MainCard";
+import useGetCurrenciesNames from "../../hooks/useGetCurrenciesNames";
 
 enum defaultCurrencies {
    brl = "brl",
@@ -14,7 +13,6 @@ enum defaultCurrencies {
 }
 
 export default function Converter() {
-   const [currenciesNames, setCurrenciesNames] = useState<ICurrencies[]>([]);
    const [initialValueKey, setInitialValueKey] = useState<string>(
       defaultCurrencies.brl
    );
@@ -27,21 +25,7 @@ export default function Converter() {
    const [isChanging, setIsChanging] = useState<boolean>(false);
    const [isVisible, setIsVisible] = useState(false);
 
-   useEffect(() => {
-      getCurrenciesNames().then(({ data }) => {
-         const currenciesKeys: string[] = Object.keys(data);
-         const currenciesValues: string[] = Object.values(data);
-         const formatCurrenciesNames = currenciesKeys.map((c, index) => {
-            return {
-               key: currenciesKeys[index],
-               name: currenciesValues[index],
-            };
-         });
-
-         setCurrenciesNames(formatCurrenciesNames);
-         setIsChanging(false);
-      });
-   }, []);
+   const { data:currenciesNames } = useGetCurrenciesNames(setIsChanging)
 
    useEffect(() => {
       if (isChanging === true) {

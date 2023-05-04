@@ -22,7 +22,7 @@ export default function Input(props: IInput) {
             variant="outline"
             placeholder="Outline"
          >
-            {props.currenciesNames.map((c, index) => (
+            {props.currenciesNames?.map((c, index) => (
                <option value={c.key} key={index}>
                   {c.name}
                </option>

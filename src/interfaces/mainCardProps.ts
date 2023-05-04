@@ -2,7 +2,7 @@ import { ICurrencies } from "./currenciesNames";
 
 export interface IMainCardProps {
     isVisible: boolean;
-    currenciesNames: ICurrencies[];
+    currenciesNames: ICurrencies[] | undefined;
     initialValueKey: string;
     setInitialValueKey: any;
     setIsVisible:any;
