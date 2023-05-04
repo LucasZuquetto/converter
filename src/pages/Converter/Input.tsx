@@ -20,7 +20,6 @@ export default function Input(props: IInput) {
             }}
             value={props.valueKey}
             variant="outline"
-            placeholder="Outline"
          >
             {props.currenciesNames?.map((c, index) => (
                <option value={c.key} key={index}>

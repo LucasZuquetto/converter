@@ -8,7 +8,7 @@ export default function useGetCurrenciesNames(setIsChanging: any) {
          getCurrenciesNames().then((data) => {
             const currenciesKeys: string[] = Object.keys(data.data);
             const currenciesValues: string[] = Object.values(data.data);
-            const formattedCurrencies = currenciesKeys.map((c, index) => {
+            const formattedCurrencies = currenciesKeys.map((_c, index) => {
                return {
                   key: currenciesKeys[index],
                   name: currenciesValues[index],
