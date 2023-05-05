@@ -29,3 +29,7 @@ yarn dev
 -React-Icons
 
 -Vite
+
+-React-Query
+
+-react-loader-spinner
